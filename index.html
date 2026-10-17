@@ -87,8 +87,8 @@ label{display:block;margin:2px 0 -4px;color:var(--m);font-size:12px}
 
 <script>
 'use strict';
-const db=supabase.createClient('https://xfevvgiqezbwimutjkyu.supabase.co','sb_publishable_0N5QfJ3en7QDyyo4oEBiNQ_WXYk0RBU');
-const OWNER='53a31555-be18-47e7-a9d4-ae51bd0de554';
+const db=supabase.createClient('https://nyuqjxsyhdiefkwuqjzb.supabase.co','sb_publishable_3sEsfdSYpyVAaFS01bXq5A_G0aaJNtN');
+const OWNER='0b90c165-87d2-43fd-9be1-1c5c8d0c8c3f';
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safe=v=>{try{const u=new URL(v);return /^https?:$/.test(u.protocol)?u.href:''}catch{return ''}};
