@@ -1,373 +1,175 @@
 <!doctype html>
-<html lang="en">
+<html lang="km">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0b0c0f">
-<title>KVAN SCRIPT</title>
+<title>ទំនាក់ទំនងខ្ញុំ · Contact Me</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{color-scheme:dark;--bg:#0b0c0f;--s:#14161a;--s2:#1b1e24;--l:#252932;--a:#5ee0d6;--t:#eceef2;--m:#8b909a;--r:#ff6b7f;--g:#5ee0a0}
+:root{color-scheme:dark;--bg:#0b0c0f;--s:#14161a;--s2:#1b1e24;--l:#252932;--a:#5ee0d6;--t:#eceef2;--m:#8b909a}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;padding-bottom:84px;background:var(--bg);color:var(--t);font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;line-height:1.45}
-button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer}button:disabled{opacity:.5}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--t);font-family:system-ui,-apple-system,"Noto Sans Khmer","Khmer OS",Arial,sans-serif;line-height:1.5}
 .hidden{display:none!important}
-header{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:rgba(11,12,15,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--l)}
-.logo{font-size:20px;font-weight:800;letter-spacing:2px}.logo i{color:var(--a);font-style:normal}
-.own{display:flex;align-items:center;gap:8px;padding:7px 12px;background:transparent;border:1px solid var(--l);border-radius:99px;font-size:12px;color:var(--m)}
-.own b{color:var(--t);letter-spacing:1px}
-main{max-width:1000px;margin:auto;padding:18px 16px}
-h1,h2,h3{margin:0}h2{font-size:22px;font-weight:700}
-.muted{color:var(--m);font-size:13px}
-input,textarea,select{width:100%;padding:13px 14px;background:var(--s);border:1px solid var(--l);border-radius:12px;outline:none}
-input:focus,textarea:focus,select:focus{border-color:var(--a)}
-textarea{min-height:110px;resize:vertical}
-select option{background:var(--s)}
-.btn{display:inline-flex;justify-content:center;align-items:center;gap:6px;padding:12px 16px;border:1px solid var(--l);border-radius:12px;background:var(--s2);font-weight:600;font-size:14px}
-.btn:active{transform:scale(.98)}
+.wrap{max-width:520px;margin:auto;padding:24px 18px 40px}
+.top{margin-bottom:30px}
+.back{display:inline-block;padding:8px 14px;color:var(--m);text-decoration:none;border:1px solid var(--l);border-radius:99px;font-size:13px}
+.back:hover{color:var(--a);border-color:var(--a)}
+.hero{text-align:center;margin-bottom:28px}
+.av{width:96px;height:96px;margin:0 auto 16px;display:grid;place-items:center;overflow:hidden;border:1px solid var(--l);border-radius:50%;background:linear-gradient(135deg,#171a20,#0f1115);color:var(--a);font-size:36px;font-weight:800}
+.av img{width:100%;height:100%;object-fit:cover}
+.name{margin:0 0 14px;font-size:24px;font-weight:800}
+h1{margin:0;font-size:30px;line-height:1.3}
+.en{margin-top:4px;color:var(--a);font-size:17px;font-weight:600}
+.bio{margin:16px auto 0;max-width:400px;color:var(--m);font-size:14px;white-space:pre-line;overflow-wrap:anywhere}
+.list{display:grid;gap:12px}
+.item{display:flex;align-items:center;gap:14px;padding:15px 16px;color:var(--t);text-decoration:none;background:var(--s);border:1px solid var(--l);border-radius:18px;transition:border-color .15s,transform .1s}
+a.item:hover{border-color:var(--a)}a.item:active{transform:scale(.985)}
+.off{opacity:.5}
+.ico{flex:none;width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--l);border-radius:14px;background:var(--s2);color:var(--a)}
+.ico svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.tx{flex:1;min-width:0}.tx b{display:block;font-size:16px}.tx span{display:block;color:var(--m);font-size:12px;overflow-wrap:anywhere}
+.go{color:var(--m);font-size:18px}
+footer{margin-top:34px;text-align:center}
+#year{padding:10px 18px;background:none;border:0;color:var(--m);font:inherit;font-size:12px;cursor:default}
+.panel{margin-top:22px;padding:18px;background:var(--s);border:1px solid var(--l);border-radius:18px}
+.panel h3{margin:0 0 12px}
+.f{display:grid;gap:10px}
+input,textarea{width:100%;padding:13px 14px;color:var(--t);background:var(--bg);border:1px solid var(--l);border-radius:12px;outline:none;font:inherit}
+input:focus,textarea:focus{border-color:var(--a)}
+textarea{min-height:100px;resize:vertical}
+label{display:block;margin:2px 0 -4px;color:var(--m);font-size:12px}
+.row{display:flex;gap:8px;margin-top:6px}
+.btn{flex:1;padding:12px;color:var(--t);background:var(--s2);border:1px solid var(--l);border-radius:12px;font:inherit;font-weight:600;cursor:pointer}
 .pri{background:var(--a);border-color:var(--a);color:#06201e}
-.dng{color:var(--r);border-color:#4a2530}
-.ic{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.sb{position:relative;margin-bottom:14px}.sb input{padding-left:42px}.sb .ic{position:absolute;left:13px;top:14px;color:var(--m)}
-.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
-.chip{flex:none;padding:8px 14px;border:1px solid var(--l);border-radius:99px;background:transparent;color:var(--m);font-size:13px}
-.chip.on{background:var(--a);border-color:var(--a);color:#06201e;font-weight:700}
-.bar{display:flex;justify-content:space-between;align-items:center;margin:22px 0 14px}
-.bar select{width:auto;padding:8px 12px;font-size:13px}
-.panel{padding:18px;margin:14px 0;background:var(--s);border:1px solid var(--l);border-radius:18px}
-.f{display:grid;grid-template-columns:1fr 1fr;gap:10px}.full{grid-column:1/-1}
-.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.acts .btn{flex:1}
-details.panel summary{cursor:pointer;font-weight:700;list-style:none}details.panel[open] summary{margin-bottom:14px}
-.grid{display:grid;grid-template-columns:1fr;gap:16px}
-@media(min-width:640px){.grid{grid-template-columns:1fr 1fr}.f{grid-template-columns:1fr 1fr}}
-@media(max-width:639px){.f{grid-template-columns:1fr}.full{grid-column:auto}}
-.card{overflow:hidden;background:var(--s);border:1px solid var(--l);border-radius:20px}
-.th{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:var(--s2)}
-.ph{display:grid;place-items:center;color:var(--m);font-weight:800;letter-spacing:3px;background:linear-gradient(135deg,#171a20,#0f1115)}
-.cb{padding:16px}
-.row{display:flex;flex-wrap:wrap;gap:6px}
-.tg{padding:4px 10px;border:1px solid var(--l);border-radius:99px;font-size:11px;color:var(--m)}
-.tg.a{color:var(--a);border-color:#245a56}.tg.g{color:var(--g);border-color:#245a40}.tg.r{color:var(--r);border-color:#5a2a35}
-.card h3{margin:12px 0 2px;font-size:18px;overflow-wrap:anywhere}
-.meta{margin-top:10px;font-size:12px;color:var(--m)}
-.ca{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.ca .w{grid-column:1/-1;padding:14px}
-.ca .btn{padding:11px 8px}
-.lnk{background:none;border:0;color:var(--m);font-size:12px;text-decoration:underline;grid-column:1/-1}
-.empty{padding:22px;border:1px dashed var(--l);border-radius:16px;color:var(--m);text-align:center;font-size:14px;grid-column:1/-1}
-.nav{position:fixed;z-index:20;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);padding:8px 8px calc(8px + env(safe-area-inset-bottom));background:rgba(11,12,15,.94);backdrop-filter:blur(14px);border-top:1px solid var(--l)}
-.nb{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px;background:none;border:0;color:var(--m);font-size:11px}
-.nb.on{color:var(--a)}
-.tabs{display:flex;gap:8px;margin:16px 0;overflow-x:auto}
-.soc{display:flex;justify-content:space-between;padding:15px 16px;color:var(--t);text-decoration:none;border-bottom:1px solid var(--l)}.soc:last-child{border:0}
-.avatar{width:84px;height:84px;border-radius:50%;object-fit:cover;border:1px solid var(--l)}
-#toast{position:fixed;z-index:50;left:50%;bottom:96px;transform:translateX(-50%);max-width:90%;padding:12px 18px;background:var(--s2);border:1px solid var(--l);border-radius:99px;font-size:13px;text-align:center}
-dialog{width:min(92%,420px);padding:20px;background:var(--s);border:1px solid var(--l);border-radius:20px}dialog::backdrop{background:#000b}
-footer{padding:24px;text-align:center;color:var(--m);font-size:12px}
+.btn:disabled{opacity:.5}
+#toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);max-width:90%;padding:11px 18px;background:var(--s2);border:1px solid var(--l);border-radius:99px;font-size:13px;text-align:center;opacity:0;pointer-events:none;transition:opacity .2s}
+#toast.on{opacity:1}
 </style>
 </head>
 <body>
-<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
-<symbol id="home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-7h6v7"/></symbol>
-<symbol id="search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="7.2"/><path d="m16 16 5 5"/></symbol>
-<symbol id="user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
-<symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
-</svg>
+<div class="wrap">
+ <div class="top"><a class="back" href="index.html">← ត្រឡប់ក្រោយ · Back</a></div>
 
-<header>
- <div class="logo">KVAN<i>.</i>SCRIPT</div>
- <button class="own" id="ownerEntry" type="button"><span>Creator by</span><b id="hName">KVAN</b></button>
-</header>
+ <section class="hero">
+  <div class="av" id="av">F</div>
+  <div class="name" id="name">Fong</div>
+  <h1>ទំនាក់ទំនងខ្ញុំ</h1>
+  <div class="en">Contact Me</div>
+  <p class="bio" id="bio"></p>
+ </section>
 
-<main>
-<section id="homePage">
- <div class="sb"><svg class="ic"><use href="#search"/></svg><input id="search" type="search" placeholder="Search scripts or games"></div>
- <div class="chips" id="chips"></div>
+ <section class="list" id="list"></section>
 
- <section id="loginPanel" class="panel hidden">
+ <footer><button id="year" type="button">© 2026</button></footer>
+
+ <section id="login" class="panel hidden">
   <h3>Owner Login</h3>
-  <div class="f" style="margin-top:12px"><input id="oe" type="email" autocomplete="username" placeholder="Email"><input id="op" type="password" autocomplete="current-password" placeholder="Password"></div>
-  <div class="acts"><button class="btn pri" id="oLogin" type="button">Log In</button><button class="btn hidden" id="oLogout" type="button">Log Out</button></div>
+  <div class="f">
+   <input id="oe" type="email" autocomplete="username" placeholder="Email">
+   <input id="op" type="password" autocomplete="current-password" placeholder="Password">
+  </div>
+  <div class="row"><button class="btn pri" id="go" type="button">Log In</button></div>
  </section>
 
- <details id="adminPanel" class="panel hidden">
-  <summary id="fh">＋ Add Script</summary>
-  <form id="sf" class="f">
-   <input id="sn" placeholder="Script name" required><input id="gn" placeholder="Game name" required>
-   <input id="ct" placeholder="Category" required><input id="tu" type="url" placeholder="Thumbnail URL (optional)">
-   <select id="cm"><option value="unknown">Compatibility: Unknown</option><option value="mobile">Mobile</option><option value="pc">PC</option><option value="both">Mobile + PC</option></select>
-   <select id="ss"><option value="active">Active</option><option value="needs_update">Needs Update</option><option value="broken">Broken</option><option value="hidden">Hidden</option></select>
-   <select id="ts"><option value="false">Not Tested</option><option value="true">Tested</option></select>
-   <textarea id="sc" class="full" style="font-family:ui-monospace,Consolas,monospace;min-height:160px" placeholder="Paste script code..." required></textarea>
-   <div class="acts full"><button class="btn pri" id="pub" type="submit">Publish</button><button class="btn hidden" id="ce" type="button">Cancel</button></div>
+ <section id="edit" class="panel hidden">
+  <h3>កែប្រែ · Edit</h3>
+  <form id="ef" class="f">
+   <label>ឈ្មោះ · Name</label><input id="e_name">
+   <label>រូបភាព · Picture URL</label><input id="e_pic" type="url" placeholder="https://...">
+   <label>ប្រវត្តិ · Bio</label><textarea id="e_bio"></textarea>
+   <div id="socF" class="f"></div>
+   <div class="row"><button class="btn pri" id="save" type="submit">រក្សាទុក · Save</button><button class="btn" id="out" type="button">Log Out</button></div>
   </form>
  </section>
-
- <div class="bar"><h2 id="lt">Scripts</h2>
-  <select id="sort"><option value="new">Newest</option><option value="likes">Most Liked</option><option value="views">Most Viewed</option><option value="copies">Most Copied</option></select></div>
- <section id="grid" class="grid"></section>
-</section>
-
-<section id="profilePage" class="hidden">
- <h2>Profile</h2><p class="muted" id="sub"></p>
- <div id="auth" class="panel">
-  <div class="tabs" style="margin-top:0"><button class="chip on" id="mIn" type="button">Sign In</button><button class="chip" id="mUp" type="button">Create Account</button></div>
-  <form id="af" class="f">
-   <input id="ae" class="full" type="email" autocomplete="email" placeholder="Email" required>
-   <input id="ap" class="full" type="password" autocomplete="current-password" minlength="6" placeholder="Password (6+ characters)" required>
-   <button class="btn pri full" id="as" type="submit">Sign In</button>
-  </form>
-  <div class="acts"><button class="btn" id="gg" type="button">Continue with Google</button><button class="btn" id="fp" type="button">Forgot password?</button></div>
- </div>
- <div class="tabs" id="ptabs">
-  <button class="chip on" data-tab="liked">Liked</button><button class="chip" data-tab="saved">Saved</button><button class="chip" data-tab="recent">Recently Copied</button>
-  <button class="chip hidden" id="so" type="button">Sign Out</button>
- </div>
- <section id="pc" class="grid"></section>
-</section>
-
-<section id="creatorPage" class="hidden">
- <section class="panel"><div id="cPub"></div><div id="cSoc" style="margin-top:14px;border:1px solid var(--l);border-radius:14px;overflow:hidden"></div></section>
- <section id="ownerArea" class="hidden">
-  <details class="panel"><summary>Edit Creator Profile</summary>
-   <form id="cf" class="f"><input id="c_name" placeholder="Creator name"><input id="c_pic" type="url" placeholder="Picture URL"><textarea id="c_bio" class="full" placeholder="Bio"></textarea><span id="socF" class="full f"></span><button class="btn pri full" type="submit">Save Profile</button></form>
-  </details>
-  <details class="panel"><summary id="rh">Reports</summary><div id="rp"></div></details>
- </section>
-</section>
-</main>
-<footer>KVAN SCRIPT © 2026</footer>
-
-<nav class="nav">
- <button class="nb on" data-page="home"><svg class="ic"><use href="#home"/></svg>Home</button>
- <button class="nb" data-page="search"><svg class="ic"><use href="#search"/></svg>Search</button>
- <button class="nb" data-page="profile"><svg class="ic"><use href="#user"/></svg>Profile</button>
- <button class="nb" data-page="creator"><svg class="ic"><use href="#info"/></svg>Creator</button>
-</nav>
-
-<dialog id="rd">
- <h3>Report Script</h3>
- <select id="rr" style="margin-top:12px"><option>Script does not work</option><option>Script execution failed</option><option>Script has errors</option><option>Other</option></select>
- <textarea id="rt" style="margin-top:8px" placeholder="Details (optional)"></textarea>
- <div class="acts"><button class="btn pri" id="rs" type="button">Send</button><button class="btn" id="rc" type="button">Cancel</button></div>
-</dialog>
-<div id="toast" class="hidden"></div>
+</div>
+<div id="toast"></div>
 
 <script>
 'use strict';
 const db=supabase.createClient('https://xfevvgiqezbwimutjkyu.supabase.co','sb_publishable_0N5QfJ3en7QDyyo4oEBiNQ_WXYk0RBU');
 const OWNER='53a31555-be18-47e7-a9d4-ae51bd0de554';
 const $=id=>document.getElementById(id);
-const E=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const U=v=>{try{const u=new URL(v);return /^https?:$/.test(u.protocol)?u.href:''}catch{return ''}};
-const ls={get:k=>{try{return localStorage.getItem(k)}catch{return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch{}}};
-const own=()=>me?.id===OWNER;
-let me=null,S=[],st={},acts={l:new Set(),s:new Set()},edit=null,mode='in',tab='liked',cat='',cp=null,rep=null,taps=0,tt,tm;
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safe=v=>{try{const u=new URL(v);return /^https?:$/.test(u.protocol)?u.href:''}catch{return ''}};
 
-function toast(m){const e=$('toast');e.textContent=m;e.classList.remove('hidden');clearTimeout(tm);tm=setTimeout(()=>e.classList.add('hidden'),3000)}
-function page(p){
- $('homePage').classList.toggle('hidden',!['home','search'].includes(p));
- $('profilePage').classList.toggle('hidden',p!=='profile');
- $('creatorPage').classList.toggle('hidden',p!=='creator');
- document.querySelectorAll('.nb').forEach(b=>b.classList.toggle('on',b.dataset.page===p));
- if(p==='search')$('search').focus();
- if(p==='profile')showTab(tab);
- if(p==='creator'&&own())loadReports();
- scrollTo(0,0);
-}
-document.querySelectorAll('.nb').forEach(b=>b.onclick=()=>page(b.dataset.page));
-const needIn=a=>{toast('Please sign in to '+a+'.');page('profile');$('ae').focus()};
-
-/* Owner: tap 3 times */
-$('ownerEntry').onclick=()=>{
- taps++;clearTimeout(tt);tt=setTimeout(()=>taps=0,1200);
- if(taps>=3){taps=0;page('home');$('loginPanel').classList.toggle('hidden');if(!$('loginPanel').classList.contains('hidden'))$('oe').focus()}
+const SOC=[['telegram','តេឡេក្រាម','Telegram'],['discord','ឌីស្កត','Discord'],['youtube','យូធូប','YouTube'],['tiktok','ទីកតុក','TikTok'],['facebook','ហ្វេសប៊ុក','Facebook']];
+const ICON={
+ telegram:'<path d="M21 4 3 11l5 2 2 6 3-4 5 4z"/><path d="m8 13 9-6"/>',
+ discord:'<rect x="3" y="6" width="18" height="12" rx="5"/><circle cx="9" cy="12" r="1.2"/><circle cx="15" cy="12" r="1.2"/>',
+ youtube:'<rect x="3" y="6" width="18" height="12" rx="4"/><path d="m10 9.5 5 2.5-5 2.5z"/>',
+ tiktok:'<path d="M14 4v10.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 4c.5 2.5 2 4 5 4.2"/>',
+ facebook:'<path d="M14 21v-8h3l.5-3H14V8.2C14 7.2 14.5 6.5 16 6.5h1.7V4A18 18 0 0 0 15.2 4C12.7 4 11 5.5 11 8v2H8v3h3v8"/>'
 };
-$('oLogin').onclick=async()=>{
- const email=$('oe').value.trim(),password=$('op').value;
- if(!email||!password)return toast('Enter email and password.');
- $('oLogin').disabled=true;
- const {data,error}=await db.auth.signInWithPassword({email,password});
- $('oLogin').disabled=false;
- if(error)return toast('Login failed.');
- if(data.user.id!==OWNER){await db.auth.signOut();return toast('This is not the owner account.')}
- $('op').value='';$('loginPanel').classList.add('hidden');toast('Owner logged in.');
-};
-$('oLogout').onclick=()=>db.auth.signOut();
 
-/* Data */
-async function loadStats(){
- const {data}=await db.rpc('kvan_get_script_stats');st={};
- (data||[]).forEach(r=>st[String(r.script_id)]={l:+r.like_count||0,s:+r.save_count||0});
-}
-async function myActs(){
- if(!me)return{l:new Set(),s:new Set()};
- const [a,b]=await Promise.all([db.from('script_likes').select('script_id').eq('user_id',me.id),db.from('script_saves').select('script_id').eq('user_id',me.id)]);
- return{l:new Set((a.data||[]).map(x=>String(x.script_id))),s:new Set((b.data||[]).map(x=>String(x.script_id)))};
-}
-async function loadScripts(){
- const {data,error}=await db.from('scripts').select('*').order('created_at',{ascending:false});
- if(error){console.error(error);$('grid').innerHTML='<div class="empty">Could not load scripts.</div>';return}
- S=data||[];await loadStats();acts=await myActs();render();
-}
-const bump=(rpc,id)=>db.rpc(rpc,{p_script_id:id}).then(r=>{if(r.error)console.warn(r.error.message)});
-function recent(id){let a=[];try{a=JSON.parse(ls.get('kvan_recent_'+(me?.id||'guest'))||'[]')}catch{}
- ls.set('kvan_recent_'+(me?.id||'guest'),JSON.stringify([id,...a.filter(x=>String(x)!==String(id))].slice(0,30)))}
-
-/* Card */
-function card(s){
- const a=document.createElement('article');a.className='card';
- const img=U(s.thumbnail_url),id=String(s.id),x=st[id]||{l:0,s:0},status=s.script_status||'active';
- a.innerHTML=(img?`<img class="th" src="${E(img)}" alt="" loading="lazy">`:'<div class="th ph">KVAN</div>')+
- `<div class="cb"><div class="row"><span class="tg a">${E(s.category||'General')}</span>${s.is_pinned?'<span class="tg a">★ Pinned</span>':''}<span class="tg ${s.is_tested?'g':''}">${s.is_tested?'Tested':'Not tested'}</span>${status!=='active'?`<span class="tg r">${E(status.replace('_',' '))}</span>`:''}</div>
- <h3>${E(s.script_name||'Untitled')}</h3><div class="muted">${E(s.game_name||'')}${s.compatibility&&s.compatibility!=='unknown'?' · '+E(s.compatibility):''}</div>
- <div class="meta">♥ ${x.l} · ▣ ${x.s} · ${+s.view_count||0} views · ${+s.copy_count||0} copies</div>
- <div class="ca"><button class="btn pri w cpy" type="button">Copy Script</button><button class="btn lk" type="button"></button><button class="btn sv" type="button"></button><button class="lnk rp" type="button">Report this script</button></div>
- ${own()?`<div class="acts"><button class="btn ed" type="button">Edit</button><button class="btn pn" type="button">${s.is_pinned?'Unpin':'Pin'}</button><button class="btn dng dl" type="button">Delete</button></div>`:''}</div>`;
- const lk=a.querySelector('.lk'),sv=a.querySelector('.sv');
- const paint=()=>{lk.textContent=acts.l.has(id)?'♥ Liked':'♡ Like';sv.textContent=acts.s.has(id)?'▣ Saved':'▢ Save';lk.style.color=acts.l.has(id)?'var(--r)':'';sv.style.color=acts.s.has(id)?'var(--a)':''};paint();
- a.querySelector('.cpy').onclick=async e=>{
-  const b=e.currentTarget,code=String(s.script_code||'');recent(s.id);
-  try{await navigator.clipboard.writeText(code)}catch{const ta=document.createElement('textarea');ta.value=code;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();const ok=document.execCommand('copy');ta.remove();if(!ok)return toast('Copy failed. Use HTTPS and try again.')}
-  bump('kvan_increment_copy',s.id);s.copy_count=(+s.copy_count||0)+1;b.textContent='✓ Copied!';setTimeout(()=>{if(b.isConnected)b.textContent='Copy Script'},1400);
- };
- const tog=async(table,btn,key)=>{
-  if(!me)return needIn(key==='l'?'like scripts':'save scripts');
-  btn.disabled=true;const on=acts[key].has(id);
-  const r=on?await db.from(table).delete().eq('script_id',s.id).eq('user_id',me.id):await db.from(table).insert({script_id:s.id,user_id:me.id});
-  btn.disabled=false;if(r.error){console.error(r.error);return toast('Could not update. Try again.')}
-  on?acts[key].delete(id):acts[key].add(id);await loadStats();render();if(!$('profilePage').classList.contains('hidden'))showTab(tab);
- };
- lk.onclick=()=>tog('script_likes',lk,'l');sv.onclick=()=>tog('script_saves',sv,'s');
- a.querySelector('.rp').onclick=()=>{rep=s;$('rd').showModal()};
- if(own()){
-  a.querySelector('.ed').onclick=()=>beginEdit(s);
-  a.querySelector('.pn').onclick=async()=>{const r=await db.from('scripts').update({is_pinned:!s.is_pinned}).eq('id',s.id);r.error?toast('Pin failed.'):loadScripts()};
-  a.querySelector('.dl').onclick=async()=>{if(!confirm('Delete this script permanently?'))return;const r=await db.from('scripts').delete().eq('id',s.id);r.error?toast('Delete failed.'):(toast('Deleted.'),loadScripts())};
- }
- const vk='kvan_v_'+id;try{if(!sessionStorage.getItem(vk)){sessionStorage.setItem(vk,'1');bump('kvan_increment_view',s.id);s.view_count=(+s.view_count||0)+1}}catch{}
- return a;
-}
-function fill(el,rows,msg){el.replaceChildren();if(!rows.length){el.innerHTML=`<div class="empty">${msg}</div>`;return}rows.forEach(s=>el.appendChild(card(s)))}
+let me=null,P={},tm,taps=0,tt;
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(tm);tm=setTimeout(()=>t.classList.remove('on'),2600)}
+const isOwner=()=>me?.id===OWNER;
 
 function render(){
- const q=$('search').value.trim().toLowerCase(),so=$('sort').value;
- const v=S.filter(s=>(own()||!['hidden','broken'].includes(s.script_status))&&(!cat||s.category===cat)&&[s.script_name,s.game_name,s.category].some(x=>String(x||'').toLowerCase().includes(q)));
- const sc=s=>so==='likes'?(st[String(s.id)]?.l||0):so==='views'?+s.view_count||0:so==='copies'?+s.copy_count||0:new Date(s.created_at||0).getTime();
- v.sort((a,b)=>(b.is_pinned?1:0)-(a.is_pinned?1:0)||sc(b)-sc(a));
- const cats=[...new Set(S.map(s=>s.category).filter(Boolean))].sort();
- $('chips').innerHTML=['',...cats].map(c=>`<button class="chip ${c===cat?'on':''}" data-c="${E(c)}" type="button">${c?E(c):'All'}</button>`).join('');
- $('chips').querySelectorAll('.chip').forEach(b=>b.onclick=()=>{cat=b.dataset.c;render()});
- $('lt').textContent=v.length+' script'+(v.length===1?'':'s');
- $('adminPanel').classList.toggle('hidden',!own());
- fill($('grid'),v,'No scripts found.');
-}
-$('search').oninput=render;$('sort').onchange=render;
-
-/* Add / Edit */
-function beginEdit(s){
- edit=s.id;
- [['sn','script_name'],['gn','game_name'],['ct','category'],['tu','thumbnail_url'],['sc','script_code']].forEach(([i,k])=>$(i).value=s[k]||'');
- $('cm').value=s.compatibility||'unknown';$('ss').value=s.script_status||'active';$('ts').value=String(!!s.is_tested);
- $('fh').textContent='✎ Edit Script';$('pub').textContent='Save Changes';$('ce').classList.remove('hidden');
- $('adminPanel').open=true;$('adminPanel').scrollIntoView({behavior:'smooth'});
-}
-function resetForm(){$('sf').reset();edit=null;$('fh').textContent='＋ Add Script';$('pub').textContent='Publish';$('ce').classList.add('hidden')}
-$('ce').onclick=resetForm;
-$('sf').onsubmit=async e=>{
- e.preventDefault();if(!own())return toast('Please log in as owner.');
- const r={script_name:$('sn').value.trim(),game_name:$('gn').value.trim(),category:$('ct').value.trim(),thumbnail_url:U($('tu').value.trim())||null,script_code:$('sc').value,compatibility:$('cm').value,script_status:$('ss').value,is_tested:$('ts').value==='true'};
- $('pub').disabled=true;
- const res=edit?await db.from('scripts').update(r).eq('id',edit):await db.from('scripts').insert(r);
- $('pub').disabled=false;
- if(res.error){console.error(res.error);return toast('Could not save. Check Supabase permissions.')}
- resetForm();toast('Script saved.');loadScripts();
-};
-
-/* Report */
-$('rc').onclick=()=>$('rd').close();
-$('rs').onclick=async()=>{
- if(!rep)return;
- const {error}=await db.from('script_reports').insert({script_id:rep.id,reason:$('rr').value,details:$('rt').value.trim()||null,reporter_user_id:me?.id||null});
- $('rd').close();$('rt').value='';toast(error?'Could not send report.':'Report sent. Thank you!');
-};
-async function loadReports(){
- const h=$('rp');h.replaceChildren();if(!own())return;
- const {data,error}=await db.from('script_reports').select('id,script_id,reason,details,status,created_at').order('created_at',{ascending:false}).limit(100);
- if(error){h.innerHTML='<div class="empty">Could not load reports.</div>';return}
- $('rh').textContent='Reports ('+data.length+')';
- if(!data.length){h.innerHTML='<div class="empty">No reports yet.</div>';return}
- data.forEach(r=>{
-  const s=S.find(x=>String(x.id)===String(r.script_id)),d=document.createElement('div');d.className='panel';
-  d.innerHTML=`<b>${E(s?.script_name||'Script #'+r.script_id)}</b><p class="muted">${E(r.reason)}${r.details?'<br>'+E(r.details):''}<br>${new Date(r.created_at).toLocaleDateString()}</p>
-  <select>${['pending','reviewed','resolved','invalid'].map(v=>`<option value="${v}" ${v===r.status?'selected':''}>${v}</option>`).join('')}</select>
-  <div class="acts"><button class="btn pri u" type="button">Update</button><button class="btn hh" type="button">Hide script</button></div>`;
-  d.querySelector('.u').onclick=async()=>{const x=await db.from('script_reports').update({status:d.querySelector('select').value}).eq('id',r.id);toast(x.error?'Failed.':'Updated.')};
-  d.querySelector('.hh').onclick=async()=>{if(!s||!confirm('Hide this script from visitors?'))return;const x=await db.from('scripts').update({script_status:'hidden'}).eq('id',s.id);toast(x.error?'Failed.':'Script hidden.');loadScripts()};
-  h.appendChild(d);
+ const name=(P.creator_name||'').trim()||'Fong',pic=safe(P.profile_picture_url||'');
+ $('name').textContent=name;
+ $('av').innerHTML=pic?`<img src="${esc(pic)}" alt="">`:esc(name.charAt(0).toUpperCase());
+ $('bio').textContent=P.bio||'';
+ $('bio').classList.toggle('hidden',!P.bio);
+ const list=$('list');list.replaceChildren();
+ SOC.forEach(([k,km,en])=>{
+  const url=safe(P[k+'_url']||''),el=document.createElement(url?'a':'div');
+  el.className='item'+(url?'':' off');
+  if(url){el.href=url;el.target='_blank';el.rel='noopener noreferrer'}
+  let host='';try{host=new URL(url).hostname.replace(/^www\./,'')}catch{}
+  el.innerHTML=`<div class="ico"><svg viewBox="0 0 24 24">${ICON[k]}</svg></div><div class="tx"><b>${km} · ${en}</b><span>${url?esc(host):'មិនទាន់កំណត់ · Not set yet'}</span></div>${url?'<span class="go">↗</span>':''}`;
+  list.appendChild(el);
  });
 }
+function fillForm(){
+ $('e_name').value=P.creator_name||'Fong';$('e_pic').value=P.profile_picture_url||'';$('e_bio').value=P.bio||'';
+ SOC.forEach(([k])=>$('s_'+k).value=P[k+'_url']||'');
+}
+function ui(){
+ $('edit').classList.toggle('hidden',!isOwner());
+ if(isOwner())$('login').classList.add('hidden');
+}
 
-/* Creator */
-const SOC=[['youtube','YouTube'],['tiktok','TikTok'],['discord','Discord'],['facebook','Facebook'],['telegram','Telegram']];
-$('socF').innerHTML=SOC.map(([k,n])=>`<input id="s_${k}" type="url" placeholder="${n} URL">`).join('');
-async function loadCreator(){
- const {data}=await db.from('creator_profile').select('*').eq('id',1).maybeSingle();
- cp=data||{creator_name:'KVAN'};
- if(own()){$('c_name').value=cp.creator_name||'';$('c_pic').value=cp.profile_picture_url||'';$('c_bio').value=cp.bio||'';SOC.forEach(([k])=>$('s_'+k).value=cp[k+'_url']||'')}
- renderCreator();
+$('socF').innerHTML=SOC.map(([k,,en])=>`<label>${en} URL</label><input id="s_${k}" type="url" placeholder="https://...">`).join('');
+
+async function load(){
+ const {data,error}=await db.from('creator_profile').select('*').eq('id',1).maybeSingle();
+ if(error)console.warn(error.message);
+ P=data||{};render();if(isOwner())fillForm();
 }
-function renderCreator(){
- const p=cp||{creator_name:'KVAN'},pic=U(p.profile_picture_url||'');
- $('hName').textContent=p.creator_name||'KVAN';
- $('cPub').innerHTML=(pic?`<img class="avatar" src="${E(pic)}" alt="">`:'')+`<h2 style="margin-top:12px">${E(p.creator_name||'KVAN')}</h2><p class="muted">${E(p.bio||'Official KVAN SCRIPT creator.')}</p>`;
- $('cSoc').replaceChildren();
- SOC.forEach(([k,n])=>{const u=U(p[k+'_url']||''),e=document.createElement(u?'a':'div');e.className='soc';if(u){e.href=u;e.target='_blank';e.rel='noopener noreferrer'}e.innerHTML=`<span>${n}</span><span class="muted">${u?'Open ↗':'Not set yet'}</span>`;$('cSoc').appendChild(e)});
-}
-$('cf').onsubmit=async e=>{
- e.preventDefault();if(!own())return;
- const r={id:1,creator_name:$('c_name').value.trim()||'KVAN',profile_picture_url:U($('c_pic').value.trim())||null,bio:$('c_bio').value.trim()};
- SOC.forEach(([k])=>r[k+'_url']=U($('s_'+k).value.trim())||null);
+
+/* Owner entry: tap © 2026 three times */
+$('year').onclick=()=>{
+ taps++;clearTimeout(tt);tt=setTimeout(()=>taps=0,1200);
+ if(taps>=3){taps=0;if(isOwner()){$('edit').scrollIntoView({behavior:'smooth'});return}
+  $('login').classList.toggle('hidden');if(!$('login').classList.contains('hidden'))$('oe').focus()}
+};
+$('go').onclick=async()=>{
+ const email=$('oe').value.trim(),password=$('op').value;
+ if(!email||!password)return toast('Enter email and password.');
+ $('go').disabled=true;
+ const {data,error}=await db.auth.signInWithPassword({email,password});
+ $('go').disabled=false;
+ if(error)return toast('Login failed.');
+ if(data.user.id!==OWNER){await db.auth.signOut();return toast('This is not the owner account.')}
+ $('op').value='';
+};
+$('out').onclick=()=>db.auth.signOut();
+
+$('ef').onsubmit=async e=>{
+ e.preventDefault();if(!isOwner())return;
+ const r={...P,id:1,creator_name:$('e_name').value.trim()||'Fong',profile_picture_url:safe($('e_pic').value.trim())||null,bio:$('e_bio').value.trim()};
+ SOC.forEach(([k])=>r[k+'_url']=safe($('s_'+k).value.trim())||null);
+ $('save').disabled=true;
  const {error}=await db.from('creator_profile').upsert(r,{onConflict:'id'});
- if(error){console.error(error);return toast('Could not save profile.')}
- cp=r;renderCreator();toast('Profile saved.');
+ $('save').disabled=false;
+ if(error){console.error(error);return toast('Could not save. Check owner permissions.')}
+ P=r;render();toast('រក្សាទុករួច · Saved');
 };
 
-/* Auth */
-function authUI(){
- $('auth').classList.toggle('hidden',!!me);$('so').classList.toggle('hidden',!me);
- $('sub').textContent=me?'Signed in as '+(me.email||'Google account'):'Sign in to sync likes and saves across devices.';
- $('ownerArea').classList.toggle('hidden',!own());
- $('oLogout').classList.toggle('hidden',!own());$('oLogin').classList.toggle('hidden',own());
- $('as').textContent=mode==='in'?'Sign In':'Create Account';
- $('mIn').classList.toggle('on',mode==='in');$('mUp').classList.toggle('on',mode==='up');
- $('fp').classList.toggle('hidden',mode!=='in');
-}
-$('mIn').onclick=()=>{mode='in';authUI()};$('mUp').onclick=()=>{mode='up';authUI()};
-$('af').onsubmit=async e=>{
- e.preventDefault();$('as').disabled=true;
- const c={email:$('ae').value.trim(),password:$('ap').value};
- const r=mode==='up'?await db.auth.signUp({...c,options:{emailRedirectTo:location.origin+location.pathname}}):await db.auth.signInWithPassword(c);
- $('as').disabled=false;
- if(r.error)return toast(r.error.message);
- if(mode==='up'&&!r.data.session){toast('Account created. Check your email to confirm.');mode='in';authUI()}
-};
-$('gg').onclick=async()=>{const {error}=await db.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+location.pathname}});if(error)toast(error.message)};
-$('fp').onclick=async()=>{const e=$('ae').value.trim();if(!e)return toast('Enter your email first.');const {error}=await db.auth.resetPasswordForEmail(e,{redirectTo:location.origin+location.pathname});toast(error?error.message:'Reset link sent if the email exists.')};
-$('so').onclick=()=>db.auth.signOut();
-
-function showTab(k){
- tab=k;document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('on',b.dataset.tab===k));
- let rows=[];
- if(k==='recent'){let a=[];try{a=JSON.parse(ls.get('kvan_recent_'+(me?.id||'guest'))||'[]')}catch{}rows=a.map(id=>S.find(s=>String(s.id)===String(id))).filter(Boolean)}
- else if(!me){$('pc').innerHTML='<div class="empty">Sign in to see your '+k+' scripts.</div>';return}
- else{const set=k==='liked'?acts.l:acts.s;rows=S.filter(s=>set.has(String(s.id)))}
- fill($('pc'),rows,'Nothing here yet.');
-}
-document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
-
-async function refresh(){authUI();await loadCreator();await loadScripts();if(own())loadReports()}
-db.auth.onAuthStateChange((_e,s)=>{const n=s?.user||null;if((n?.id||null)!==(me?.id||null)){me=n;setTimeout(refresh,0)}});
-(async()=>{const {data}=await db.auth.getSession();me=data?.session?.user||null;await refresh()})();
+db.auth.onAuthStateChange((_e,s)=>{const n=s?.user||null;if((n?.id||null)!==(me?.id||null)){me=n;setTimeout(()=>{ui();if(isOwner())fillForm()},0)}});
+(async()=>{const {data}=await db.auth.getSession();me=data?.session?.user||null;await load();ui()})();
 </script>
 </body>
 </html>
