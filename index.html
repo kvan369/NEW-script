@@ -23,3 +23,381 @@ input:focus,textarea:focus,select:focus{border-color:var(--b)}
 textarea{min-height:100px;resize:vertical}
 .btn{display:inline-flex;justify-content:center;align-items:center;gap:6px;padding:11px 13px;border:1px solid transparent;border-radius:10px;background:linear-gradient(135deg,#3984ff,#2868e8);color:#fff;font-weight:700}
 .s{background:#1a2940;border-color:var(--l)}.d{background:#a92f45}.q{background:transparent;border-color:var(--l)}
+.bar1{display:flex;gap:8px;margin-bottom:12px}.bar1 input{flex:1}
+.panel,.card{background:linear-gradient(145deg,#121d31,#0e1728);border:1px solid var(--l);border-radius:14px}
+.panel{padding:14px;margin:14px 0}.panel h2,.panel h3{margin-top:0}
+.muted{color:var(--m);font-size:13px;line-height:1.5}
+.f{display:grid;grid-template-columns:1fr 1fr;gap:10px}.full{grid-column:1/-1}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.acts .btn{flex:1}
+.sec{display:flex;justify-content:space-between;align-items:center;margin:24px 0 12px}.sec h2{margin:0;font-size:18px}.sec span{color:var(--m);font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:13px}
+.card{overflow:hidden;min-width:0}
+.th{display:block;width:100%;height:150px;object-fit:cover;background:#17243a}
+.ph{display:grid;place-items:center;color:#9bb4d8;font-weight:900;background:radial-gradient(circle at 50% 20%,#233b60,#101a2c)}
+.cb{padding:13px}
+.tag{padding:5px 8px;border-radius:7px;background:#1b3152;color:#9cc4ff;font-size:12px}
+.card h3{margin:10px 0 6px;overflow-wrap:anywhere}
+.row{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pill{padding:4px 8px;border:1px solid var(--l);border-radius:99px;color:var(--m);font-size:11px}
+.ok{color:var(--g);border-color:#286c56}.bad{color:#ff8798;border-color:#833548}.key{color:#ffd477;border-color:#7a5d26}
+.ca{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.ca .w{grid-column:1/-1}.ca .btn{padding:10px 6px;font-size:13px}
+#status{color:#9cc4ff;font-size:13px;min-height:20px}
+.nav{position:fixed;z-index:20;bottom:0;left:0;right:0;display:grid;grid-template-columns:repeat(4,1fr);gap:3px;padding:7px 5px calc(7px + env(safe-area-inset-bottom));background:rgba(13,22,40,.97);border-top:1px solid var(--l)}
+.nb{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 2px;color:var(--m);background:transparent;border:0;border-radius:10px;font-size:11px}
+.nb.on{color:#8db8ff;background:#172944}
+.ic{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tabs{display:flex;gap:6px;margin:12px 0;flex-wrap:wrap}.tabs .btn{flex:1;font-size:13px}
+.empty{padding:16px;border:1px dashed #344761;border-radius:12px;color:var(--m);text-align:center;font-size:13px}
+.soc{display:block;padding:13px;color:var(--t);text-decoration:none;background:var(--p);border-bottom:1px solid var(--l)}
+#toast{position:fixed;z-index:50;left:50%;bottom:90px;transform:translateX(-50%);max-width:92%;padding:11px 15px;background:#1a2940;border:1px solid #3b5578;border-radius:12px;font-size:13px;text-align:center}
+.av{display:grid;grid-template-columns:48px 1fr 56px;gap:8px;align-items:center;font-size:11px;color:var(--m);margin:4px 0}
+.av div{display:flex;flex-direction:column;gap:2px}.av i{display:block;height:6px;border-radius:3px;background:var(--b)}.av i.c{background:var(--g)}
+dialog{width:min(92%,420px);color:var(--t);background:var(--p);border:1px solid var(--l);border-radius:14px}dialog::backdrop{background:#000a}
+@media(max-width:520px){.f{grid-template-columns:1fr}.full{grid-column:auto}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+<symbol id="home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-7h6v7"/></symbol>
+<symbol id="search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="7.2"/><path d="m16 16 5 5"/></symbol>
+<symbol id="user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+<symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+</svg>
+
+<header>
+ <div><div class="logo">KVAN <span>SCRIPT</span></div><div class="muted" id="tag"></div></div>
+ <div class="hr">
+  <button class="lang" id="langBtn" type="button"><b>EN</b>/ខ្មែរ</button>
+  <button class="own" id="ownerEntry" type="button"><span data-i="creatorBy"></span><b id="hName">KVAN</b></button>
+ </div>
+</header>
+
+<main>
+<section id="homePage">
+ <div class="bar1"><input id="search" type="search" data-p="searchPh"><button class="btn" id="go" type="button"><svg class="ic"><use href="#search"/></svg></button></div>
+ <div class="f" style="margin-bottom:12px">
+  <select id="cat"></select>
+  <select id="sort"><option value="new" data-i="sNew"></option><option value="likes" data-i="sLikes"></option><option value="views" data-i="sViews"></option><option value="copies" data-i="sCopies"></option></select>
+ </div>
+
+ <section id="loginPanel" class="panel hidden">
+  <h2 data-i="ownerLogin"></h2>
+  <div class="f"><input id="oe" type="email" autocomplete="username" placeholder="Email"><input id="op" type="password" autocomplete="current-password" placeholder="Password"></div>
+  <div class="acts"><button class="btn" id="oLogin" type="button" data-i="login"></button></div>
+ </section>
+
+ <section id="adminPanel" class="panel hidden">
+  <h2 id="fh"></h2>
+  <form id="sf" class="f">
+   <input id="sn" data-p="name" required><input id="gn" data-p="game" required>
+   <input id="ct" data-p="category" required><input id="tu" type="url" data-p="thumb">
+   <select id="ks"><option value="unknown" data-i="kUnknown"></option><option value="keyless">KEYLESS</option><option value="key">KEY SYSTEM</option></select>
+   <select id="cm"><option value="unknown">Unknown</option><option value="mobile">Mobile</option><option value="pc">PC</option><option value="both">Mobile + PC</option></select>
+   <select id="ss"><option value="active">Active</option><option value="needs_update">Needs Update</option><option value="broken">Broken</option><option value="hidden">Hidden</option></select>
+   <select id="ts"><option value="false" data-i="untested"></option><option value="true" data-i="tested"></option></select>
+   <textarea id="sc" class="full" style="font-family:monospace;min-height:150px" data-p="code" required></textarea>
+   <div class="acts full"><button class="btn" id="pub" type="submit" data-i="publish"></button><button class="btn s hidden" id="ce" type="button" data-i="cancel"></button></div>
+  </form>
+ </section>
+
+ <p id="status"></p>
+ <div class="sec"><h2 data-i="newly"></h2></div><section id="gNew" class="grid"></section>
+ <div class="sec"><h2 data-i="all"></h2><span id="cnt"></span></div><section id="gAll" class="grid"></section>
+</section>
+
+<section id="profilePage" class="hidden">
+ <h2 data-i="profile"></h2><p class="muted" id="sub"></p>
+ <div id="auth" class="panel">
+  <div class="tabs"><button class="btn" id="mIn" type="button" data-i="signin"></button><button class="btn s" id="mUp" type="button" data-i="signup"></button></div>
+  <form id="af" class="f">
+   <input id="ae" class="full" type="email" autocomplete="email" placeholder="Email" required>
+   <input id="ap" class="full" type="password" autocomplete="current-password" minlength="6" placeholder="Password (6+)" required>
+   <button class="btn full" id="as" type="submit"></button>
+  </form>
+  <div class="acts"><button class="btn s" id="gg" type="button">Google</button><button class="btn q" id="fp" type="button" data-i="forgot"></button></div>
+ </div>
+ <div class="tabs" id="ptabs">
+  <button class="btn s" data-tab="liked" data-i="liked"></button><button class="btn s" data-tab="saved" data-i="saved"></button>
+  <button class="btn s" data-tab="recent" data-i="recent"></button><button class="btn s hidden" id="so" type="button" data-i="signout"></button>
+ </div>
+ <section id="pc"></section>
+</section>
+
+<section id="creatorPage" class="hidden">
+ <section class="panel"><div id="cPub"></div><div id="cSoc" style="border:1px solid var(--l);border-radius:12px;overflow:hidden;margin-top:12px"></div></section>
+ <section id="ownerArea" class="hidden">
+  <div class="panel"><h2 data-i="editProfile"></h2>
+   <form id="cf" class="f"><input id="c_name" data-p="cname"><input id="c_pic" type="url" data-p="cpic"><textarea id="c_bio" class="full" data-p="cbio"></textarea><span id="socF" class="full f"></span><button class="btn full" type="submit" data-i="save"></button></form>
+  </div>
+  <div class="panel"><h2 data-i="analytics"></h2>
+   <div class="tabs"><button class="btn" id="d7" type="button">7</button><button class="btn s" id="d30" type="button">30</button></div>
+   <div id="an"></div></div>
+  <div class="panel"><h2 data-i="reports"></h2><div id="rp"></div></div>
+ </section>
+</section>
+</main>
+
+<nav class="nav">
+ <button class="nb on" data-page="home" type="button"><svg class="ic"><use href="#home"/></svg><span data-i="home"></span></button>
+ <button class="nb" data-page="search" type="button"><svg class="ic"><use href="#search"/></svg><span data-i="searchNav"></span></button>
+ <button class="nb" data-page="profile" type="button"><svg class="ic"><use href="#user"/></svg><span data-i="profile"></span></button>
+ <button class="nb" data-page="creator" type="button"><svg class="ic"><use href="#info"/></svg><span data-i="creator"></span></button>
+</nav>
+
+<dialog id="rd">
+ <h3 data-i="report"></h3>
+ <select id="rr"><option>Script does not work</option><option>Execution failed</option><option>Has errors</option><option>Other</option></select>
+ <textarea id="rt" style="margin-top:8px" data-p="details"></textarea>
+ <div class="acts"><button class="btn" id="rs" type="button" data-i="send"></button><button class="btn s" id="rc" type="button" data-i="cancel"></button></div>
+</dialog>
+<div id="toast" class="hidden"></div>
+
+<script>
+'use strict';
+const db=supabase.createClient('https://xfevvgiqezbwimutjkyu.supabase.co','sb_publishable_0N5QfJ3en7QDyyo4oEBiNQ_WXYk0RBU');
+const OWNER='53a31555-be18-47e7-a9d4-ae51bd0de554';
+const $=id=>document.getElementById(id);
+const E=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const U=v=>{try{const u=new URL(v);return /^https?:$/.test(u.protocol)?u.href:''}catch{return ''}};
+const ls={get:k=>{try{return localStorage.getItem(k)}catch{return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch{}}};
+let me=null,S=[],st={},edit=null,mode='in',tab='liked',days=7,cp=null,rep=null,taps=0,tt,tm;
+let lang=ls.get('kvan_lang')==='km'?'km':'en';
+const own=()=>me?.id===OWNER;
+
+const T={en:{tag:'Discover · Copy Roblox Scripts',creatorBy:'Creator by',searchPh:'Search scripts, games...',sNew:'Newest',sLikes:'Most Liked',sViews:'Most Viewed',sCopies:'Most Copied',allCat:'All Categories',ownerLogin:'Owner Login',login:'Log In',name:'Script name',game:'Game name',category:'Category',thumb:'Thumbnail URL (optional)',code:'Paste script code...',kUnknown:'Key: Unknown',tested:'Tested',untested:'Not Tested',publish:'Publish Script',cancel:'Cancel',newly:'Newly Added',all:'All Scripts',profile:'Profile',home:'Home',searchNav:'Search',creator:'Creator',signin:'Sign In',signup:'Create Account',forgot:'Forgot password?',liked:'Liked',saved:'Saved',recent:'Recent',signout:'Sign Out',subOut:'Sign in to sync likes and saves.',subIn:'Signed in as ',editProfile:'Creator Profile Settings',cname:'Creator name',cpic:'Picture URL',cbio:'Bio',save:'Save',analytics:'Analytics',reports:'Reports',report:'Report Script',details:'Details (optional)',send:'Send',like:'♡ Like',unlike:'♥ Liked',saveB:'▣ Save',unsave:'▣ Saved',copy:'Copy Script',copied:'Copied!',views:'Views',copies:'Copies',likes:'Likes',saves:'Saves',edit:'Edit',del:'Delete',hide:'Hide',show:'Show',none:'Nothing here yet.',found:' script(s)',needIn:'Please sign in first.',ok:'Done.',err:'Something went wrong.',notSet:'Not set yet',bio:'Official KVAN SCRIPT creator.',add:'Add a Script',editS:'Edit Script',saveCh:'Save Changes',update:'Update',pending:'Pending',reviewed:'Reviewed',resolved:'Resolved',invalid:'Invalid'},
+km:{tag:'ស្វែងរក · ចម្លង Roblox Scripts',creatorBy:'បង្កើតដោយ',searchPh:'ស្វែងរក Script ឬ Game...',sNew:'ថ្មីបំផុត',sLikes:'Like ច្រើនបំផុត',sViews:'មើលច្រើនបំផុត',sCopies:'ចម្លងច្រើនបំផុត',allCat:'ប្រភេទទាំងអស់',ownerLogin:'ចូលជាម្ចាស់',login:'ចូល',name:'ឈ្មោះ Script',game:'ឈ្មោះ Game',category:'ប្រភេទ',thumb:'តំណរូបភាព (ស្រេចចិត្ត)',code:'បិទភ្ជាប់កូដ Script...',kUnknown:'Key: មិនដឹង',tested:'បានសាកល្បង',untested:'មិនទាន់សាកល្បង',publish:'បោះពុម្ព Script',cancel:'បោះបង់',newly:'ថ្មីៗ',all:'Script ទាំងអស់',profile:'គណនី',home:'ទំព័រដើម',searchNav:'ស្វែងរក',creator:'អ្នកបង្កើត',signin:'ចូលគណនី',signup:'បង្កើតគណនី',forgot:'ភ្លេចពាក្យសម្ងាត់?',liked:'ចូលចិត្ត',saved:'បានរក្សាទុក',recent:'ថ្មីៗនេះ',signout:'ចាកចេញ',subOut:'ចូលគណនីដើម្បីរក្សា Like និង Save។',subIn:'ចូលជា ',editProfile:'កែប្រវត្តិអ្នកបង្កើត',cname:'ឈ្មោះអ្នកបង្កើត',cpic:'តំណរូបភាព',cbio:'ប្រវត្តិ',save:'រក្សាទុក',analytics:'ស្ថិតិ',reports:'របាយការណ៍',report:'រាយការណ៍ Script',details:'ព័ត៌មានលម្អិត (ស្រេចចិត្ត)',send:'ផ្ញើ',like:'♡ Like',unlike:'♥ ចូលចិត្ត',saveB:'▣ រក្សាទុក',unsave:'▣ បានរក្សា',copy:'ចម្លង Script',copied:'បានចម្លង!',views:'មើល',copies:'ចម្លង',likes:'Like',saves:'Save',edit:'កែ',del:'លុប',hide:'លាក់',show:'បង្ហាញ',none:'មិនទាន់មានទេ។',found:' script',needIn:'សូមចូលគណនីសិន។',ok:'រួចរាល់។',err:'មានបញ្ហា។',notSet:'មិនទាន់កំណត់',bio:'អ្នកបង្កើត KVAN SCRIPT ផ្លូវការ។',add:'បន្ថែម Script',editS:'កែ Script',saveCh:'រក្សាទុកការកែ',update:'ធ្វើបច្ចុប្បន្នភាព',pending:'រង់ចាំ',reviewed:'បានពិនិត្យ',resolved:'បានដោះស្រាយ',invalid:'មិនត្រឹមត្រូវ'}};
+const t=k=>T[lang][k]??T.en[k]??k;
+
+function toast(m){const e=$('toast');e.textContent=m;e.classList.remove('hidden');clearTimeout(tm);tm=setTimeout(()=>e.classList.add('hidden'),3000)}
+function applyLang(){
+ document.documentElement.lang=lang==='km'?'km':'en';
+ document.querySelectorAll('[data-i]').forEach(e=>e.textContent=t(e.dataset.i));
+ document.querySelectorAll('[data-p]').forEach(e=>e.placeholder=t(e.dataset.p));
+ $('tag').textContent=t('tag');$('langBtn').firstChild.textContent=lang==='km'?'ខ្មែរ':'EN';
+ $('fh').textContent=t(edit?'editS':'add');$('pub').textContent=t(edit?'saveCh':'publish');
+ $('as').textContent=t(mode==='in'?'signin':'signup');
+ buildCats();authUI();render();if(!$('profilePage').classList.contains('hidden'))showTab(tab);
+ renderCreator();if(own()){loadAn();loadReports()}
+}
+$('langBtn').onclick=()=>{lang=lang==='en'?'km':'en';ls.set('kvan_lang',lang);applyLang()};
+
+function page(p){
+ $('homePage').classList.toggle('hidden',!['home','search'].includes(p));
+ $('profilePage').classList.toggle('hidden',p!=='profile');
+ $('creatorPage').classList.toggle('hidden',p!=='creator');
+ document.querySelectorAll('.nb').forEach(b=>b.classList.toggle('on',b.dataset.page===p));
+ if(p==='search')$('search').focus();
+ if(p==='profile')showTab(tab);
+ if(p==='creator'&&own()){loadAn();loadReports()}
+}
+document.querySelectorAll('.nb').forEach(b=>b.onclick=()=>page(b.dataset.page));
+const needIn=()=>{toast(t('needIn'));page('profile');$('ae').focus()};
+
+/* Owner: tap 3 times */
+$('ownerEntry').onclick=()=>{taps++;clearTimeout(tt);tt=setTimeout(()=>taps=0,1200);
+ if(taps>=3){taps=0;if(own()){toast('Owner ✓');return}$('loginPanel').classList.toggle('hidden');page('home');$('oe').focus()}};
+$('oLogin').onclick=async()=>{
+ const email=$('oe').value.trim(),password=$('op').value;
+ if(!email||!password)return toast(t('err'));
+ const {data,error}=await db.auth.signInWithPassword({email,password});
+ if(error)return toast(error.message);
+ if(data.user.id!==OWNER){await db.auth.signOut();return toast('Not owner')}
+ $('loginPanel').classList.add('hidden');$('op').value='';
+};
+
+/* Data */
+async function loadStats(){
+ const {data}=await db.rpc('kvan_get_script_stats');st={};
+ (data||[]).forEach(r=>st[r.script_id]={l:+r.like_count||0,s:+r.save_count||0});
+}
+async function myActs(){
+ if(!me)return{l:new Set(),s:new Set()};
+ const [a,b]=await Promise.all([db.from('script_likes').select('script_id').eq('user_id',me.id),db.from('script_saves').select('script_id').eq('user_id',me.id)]);
+ return{l:new Set((a.data||[]).map(x=>String(x.script_id))),s:new Set((b.data||[]).map(x=>String(x.script_id)))};
+}
+let acts={l:new Set(),s:new Set()};
+async function loadScripts(){
+ $('status').textContent='...';
+ const {data,error}=await db.from('scripts').select('*').order('created_at',{ascending:false});
+ if(error){console.error(error);$('status').textContent=t('err');return}
+ S=data||[];await loadStats();acts=await myActs();buildCats();render();
+}
+function buildCats(){
+ const sel=$('cat'),old=sel.value;sel.replaceChildren(new Option(t('allCat'),''));
+ [...new Set(S.map(s=>s.category).filter(Boolean))].sort().forEach(c=>sel.add(new Option(c,c)));
+ sel.value=[...sel.options].some(o=>o.value===old)?old:'';
+}
+const track=(id,type)=>db.rpc('kvan_track_analytics_event',{p_script_id:id,p_event_type:type}).then(r=>{if(r.error)console.warn(r.error.message)});
+function recent(id){let a=[];try{a=JSON.parse(ls.get('kvan_rc_'+(me?.id||'g'))||'[]')}catch{}
+ a=[id,...a.filter(x=>String(x)!==String(id))].slice(0,30);ls.set('kvan_rc_'+(me?.id||'g'),JSON.stringify(a))}
+
+/* Card */
+function card(s){
+ const a=document.createElement('article');a.className='card';
+ const img=U(s.thumbnail_url),x=st[s.id]||{l:0,s:0},id=String(s.id);
+ const key=s.key_system==='keyless'?'<span class="pill ok">KEYLESS</span>':s.key_system==='key'?'<span class="pill key">KEY SYSTEM</span>':'';
+ a.innerHTML=(img?`<img class="th" src="${E(img)}" alt="" loading="lazy">`:'<div class="th ph">KVAN SCRIPT</div>')+
+ `<div class="cb"><div class="row"><span class="tag">${E(s.category||'General')}</span>${key}<span class="pill ${s.is_tested?'ok':''}">${t(s.is_tested?'tested':'untested')}</span>${s.script_status&&s.script_status!=='active'?`<span class="pill bad">${E(s.script_status)}</span>`:''}</div>
+ <h3>${E(s.script_name)}</h3><div class="muted">${E(s.game_name)} · ${E(s.compatibility||'')}</div>
+ <div class="row"><span class="pill">♥ ${x.l}</span><span class="pill">▣ ${x.s}</span><span class="pill">${t('views')} ${+s.view_count||0}</span><span class="pill">${t('copies')} ${+s.copy_count||0}</span></div>
+ <div class="ca"><button class="btn s lk" type="button"></button><button class="btn s sv" type="button"></button><button class="btn w cpy" type="button">${t('copy')}</button><button class="btn q w rp" type="button">${t('report')}</button></div>
+ ${own()?`<div class="acts"><button class="btn s ed" type="button">${t('edit')}</button><button class="btn s hd" type="button">${s.script_status==='hidden'?t('show'):t('hide')}</button><button class="btn d dl" type="button">${t('del')}</button></div>`:''}</div>`;
+ const lk=a.querySelector('.lk'),sv=a.querySelector('.sv');
+ lk.textContent=t(acts.l.has(id)?'unlike':'like');sv.textContent=t(acts.s.has(id)?'unsave':'saveB');
+ a.querySelector('.cpy').onclick=async e=>{
+  const b=e.currentTarget,code=String(s.script_code||'');
+  try{await navigator.clipboard.writeText(code)}catch{const ta=document.createElement('textarea');ta.value=code;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();const ok=document.execCommand('copy');ta.remove();if(!ok)return toast(t('err'))}
+  recent(s.id);track(s.id,'copy');s.copy_count=(+s.copy_count||0)+1;b.textContent=t('copied');setTimeout(()=>{if(b.isConnected)b.textContent=t('copy')},1300);
+ };
+ const tog=async(table,btn,set)=>{
+  if(!me)return needIn();btn.disabled=true;
+  const on=acts[set].has(id);
+  const r=on?await db.from(table).delete().eq('script_id',s.id).eq('user_id',me.id):await db.from(table).insert({script_id:s.id,user_id:me.id});
+  btn.disabled=false;if(r.error){console.error(r.error);return toast(t('err'))}
+  await loadStats();acts=await myActs();render();if(!$('profilePage').classList.contains('hidden'))showTab(tab);
+ };
+ lk.onclick=()=>tog('script_likes',lk,'l');sv.onclick=()=>tog('script_saves',sv,'s');
+ a.querySelector('.rp').onclick=()=>{rep=s;$('rd').showModal()};
+ if(own()){
+  a.querySelector('.ed').onclick=()=>beginEdit(s);
+  a.querySelector('.hd').onclick=async()=>{const r=await db.from('scripts').update({script_status:s.script_status==='hidden'?'active':'hidden'}).eq('id',s.id);r.error?toast(t('err')):loadScripts()};
+  a.querySelector('.dl').onclick=async()=>{if(!confirm('Delete?'))return;const r=await db.from('scripts').delete().eq('id',s.id);r.error?toast(t('err')):loadScripts()};
+ }
+ const vk='kvan_v_'+id;try{if(!sessionStorage.getItem(vk)){sessionStorage.setItem(vk,'1');track(s.id,'view');s.view_count=(+s.view_count||0)+1}}catch{}
+ return a;
+}
+function fill(el,rows){el.replaceChildren();if(!rows.length){el.innerHTML=`<div class="empty">${t('none')}</div>`;return}rows.forEach(s=>el.appendChild(card(s)))}
+function render(){
+ const q=$('search').value.trim().toLowerCase(),c=$('cat').value,so=$('sort').value;
+ const v=S.filter(s=>(own()||!['hidden','broken'].includes(s.script_status))&&(!c||s.category===c)&&[s.script_name,s.game_name,s.category].some(x=>String(x||'').toLowerCase().includes(q)));
+ const sc=s=>so==='likes'?(st[s.id]?.l||0):so==='views'?+s.view_count||0:so==='copies'?+s.copy_count||0:new Date(s.created_at).getTime();
+ fill($('gNew'),v.slice(0,6));fill($('gAll'),[...v].sort((a,b)=>sc(b)-sc(a)));
+ $('cnt').textContent=v.length+t('found');$('status').textContent='';
+ $('adminPanel').classList.toggle('hidden',!own());
+}
+['search','cat','sort'].forEach(i=>$(i).addEventListener(i==='search'?'input':'change',render));
+$('go').onclick=()=>{page('search');render()};
+
+/* Add / edit */
+function beginEdit(s){
+ edit=s.id;
+ [['sn','script_name'],['gn','game_name'],['ct','category'],['tu','thumbnail_url'],['sc','script_code']].forEach(([i,k])=>$(i).value=s[k]||'');
+ $('ks').value=s.key_system||'unknown';$('cm').value=s.compatibility||'unknown';$('ss').value=s.script_status||'active';$('ts').value=String(!!s.is_tested);
+ $('ce').classList.remove('hidden');applyLangForm();$('adminPanel').scrollIntoView({behavior:'smooth'});
+}
+function applyLangForm(){$('fh').textContent=t(edit?'editS':'add');$('pub').textContent=t(edit?'saveCh':'publish')}
+function resetForm(){$('sf').reset();edit=null;$('ce').classList.add('hidden');applyLangForm()}
+$('ce').onclick=resetForm;
+$('sf').onsubmit=async e=>{
+ e.preventDefault();if(!own())return;
+ const r={script_name:$('sn').value.trim(),game_name:$('gn').value.trim(),category:$('ct').value.trim(),thumbnail_url:U($('tu').value.trim())||null,script_code:$('sc').value,key_system:$('ks').value,compatibility:$('cm').value,script_status:$('ss').value,is_tested:$('ts').value==='true'};
+ $('pub').disabled=true;
+ const res=edit?await db.from('scripts').update(r).eq('id',edit):await db.from('scripts').insert(r);
+ $('pub').disabled=false;
+ if(res.error){console.error(res.error);return toast(res.error.message)}
+ resetForm();toast(t('ok'));loadScripts();
+};
+
+/* Report */
+$('rc').onclick=()=>$('rd').close();
+$('rs').onclick=async()=>{
+ if(!rep)return;
+ const {error}=await db.from('script_reports').insert({script_id:rep.id,reason:$('rr').value,details:$('rt').value.trim()||null,reporter_user_id:me?.id||null});
+ $('rd').close();$('rt').value='';toast(error?t('err'):t('ok'));
+};
+async function loadReports(){
+ const h=$('rp');h.replaceChildren();if(!own())return;
+ const {data,error}=await db.from('script_reports').select('id,script_id,reason,details,status,created_at').order('created_at',{ascending:false}).limit(50);
+ if(error){h.innerHTML=`<div class="empty">${t('err')}</div>`;return}
+ if(!data.length){h.innerHTML=`<div class="empty">${t('none')}</div>`;return}
+ data.forEach(r=>{
+  const s=S.find(x=>String(x.id)===String(r.script_id)),d=document.createElement('div');d.className='panel';
+  d.innerHTML=`<b>${E(s?.script_name||'#'+r.script_id)}</b><p class="muted">${E(r.reason)}<br>${E(r.details||'')}<br>${new Date(r.created_at).toLocaleDateString()}</p>
+  <select>${['pending','reviewed','resolved','invalid'].map(v=>`<option value="${v}" ${v===r.status?'selected':''}>${t(v)}</option>`).join('')}</select>
+  <div class="acts"><button class="btn u" type="button">${t('update')}</button><button class="btn s hh" type="button">${t('hide')}</button></div>`;
+  d.querySelector('.u').onclick=async()=>{const x=await db.from('script_reports').update({status:d.querySelector('select').value}).eq('id',r.id);toast(x.error?t('err'):t('ok'))};
+  d.querySelector('.hh').onclick=async()=>{if(!s)return;const x=await db.from('scripts').update({script_status:'hidden'}).eq('id',s.id);toast(x.error?t('err'):t('ok'));loadScripts()};
+  h.appendChild(d);
+ });
+}
+
+/* Analytics */
+async function loadAn(){
+ if(!own())return;
+ $('d7').className='btn'+(days===7?'':' s');$('d30').className='btn'+(days===30?'':' s');
+ const {data,error}=await db.rpc('kvan_owner_analytics',{p_days:days});
+ if(error){$('an').innerHTML=`<div class="empty">${E(error.message)}</div>`;return}
+ const d=data.daily||[],m=Math.max(1,...d.map(x=>Math.max(+x.views,+x.copies)));
+ $('an').innerHTML=`<div class="row">${['views','copies','likes','reports'].map(k=>`<span class="pill">${t(k==='reports'?'reports':k)}: ${data[k]}</span>`).join('')}</div>`+
+ d.map(x=>`<div class="av"><span>${E(String(x.day).slice(5))}</span><div><i style="width:${x.views/m*100}%"></i><i class="c" style="width:${x.copies/m*100}%"></i></div><span>${x.views}/${x.copies}</span></div>`).join('');
+}
+$('d7').onclick=()=>{days=7;loadAn()};$('d30').onclick=()=>{days=30;loadAn()};
+
+/* Creator */
+const SOC=[['youtube','YouTube'],['tiktok','TikTok'],['discord','Discord'],['facebook','Facebook'],['telegram','Telegram']];
+$('socF').innerHTML=SOC.map(([k,n])=>`<input id="s_${k}" type="url" placeholder="${n} URL">`).join('');
+async function loadCreator(){
+ const {data}=await db.from('creator_profile').select('*').eq('id',1).maybeSingle();
+ cp=data||{creator_name:'KVAN'};
+ if(own()){$('c_name').value=cp.creator_name||'';$('c_pic').value=cp.profile_picture_url||'';$('c_bio').value=cp.bio||'';SOC.forEach(([k])=>$('s_'+k).value=cp[k+'_url']||'')}
+ renderCreator();
+}
+function renderCreator(){
+ const p=cp||{creator_name:'KVAN'},pic=U(p.profile_picture_url||'');
+ $('hName').textContent=p.creator_name||'KVAN';
+ $('cPub').innerHTML=(pic?`<img src="${E(pic)}" alt="" style="width:88px;height:88px;border-radius:50%;object-fit:cover;border:1px solid var(--l)">`:'')+`<h2>${E(p.creator_name||'KVAN')}</h2><p class="muted">${E(p.bio||t('bio'))}</p>`;
+ $('cSoc').replaceChildren();
+ SOC.forEach(([k,n])=>{const u=U(p[k+'_url']||''),e=document.createElement(u?'a':'div');e.className='soc';if(u){e.href=u;e.target='_blank';e.rel='noopener noreferrer'}e.textContent=n+' — '+(u?'↗':t('notSet'));$('cSoc').appendChild(e)});
+}
+$('cf').onsubmit=async e=>{
+ e.preventDefault();if(!own())return;
+ const r={id:1,creator_name:$('c_name').value.trim()||'KVAN',profile_picture_url:U($('c_pic').value.trim())||null,bio:$('c_bio').value.trim()};
+ SOC.forEach(([k])=>r[k+'_url']=U($('s_'+k).value.trim())||null);
+ const {error}=await db.from('creator_profile').upsert(r,{onConflict:'id'});
+ if(error)return toast(error.message);cp=r;renderCreator();toast(t('ok'));
+};
+
+/* Auth */
+function authUI(){
+ $('auth').classList.toggle('hidden',!!me);$('so').classList.toggle('hidden',!me);
+ $('sub').textContent=me?t('subIn')+(me.email||'Google'):t('subOut');
+ $('ownerArea').classList.toggle('hidden',!own());
+ $('as').textContent=t(mode==='in'?'signin':'signup');
+ $('mIn').className='btn'+(mode==='in'?'':' s');$('mUp').className='btn'+(mode==='up'?'':' s');
+ $('fp').classList.toggle('hidden',mode!=='in');
+}
+$('mIn').onclick=()=>{mode='in';authUI()};$('mUp').onclick=()=>{mode='up';authUI()};
+$('af').onsubmit=async e=>{
+ e.preventDefault();$('as').disabled=true;
+ const c={email:$('ae').value.trim(),password:$('ap').value};
+ const r=mode==='up'?await db.auth.signUp({...c,options:{emailRedirectTo:location.origin+location.pathname}}):await db.auth.signInWithPassword(c);
+ $('as').disabled=false;
+ if(r.error)return toast(r.error.message);
+ if(mode==='up'&&!r.data.session){toast('Check your email to confirm.');mode='in';authUI()}
+};
+$('gg').onclick=async()=>{const {error}=await db.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+location.pathname}});if(error)toast(error.message)};
+$('fp').onclick=async()=>{const e=$('ae').value.trim();if(!e)return toast('Email?');const {error}=await db.auth.resetPasswordForEmail(e,{redirectTo:location.origin+location.pathname});toast(error?error.message:t('ok'))};
+$('so').onclick=()=>db.auth.signOut();
+
+async function showTab(k){
+ tab=k;const box=$('pc');box.replaceChildren();
+ document.querySelectorAll('[data-tab]').forEach(b=>b.className='btn'+(b.dataset.tab===k?'':' s'));
+ let rows=[];
+ if(k==='recent'){let a=[];try{a=JSON.parse(ls.get('kvan_rc_'+(me?.id||'g'))||'[]')}catch{}rows=a.map(id=>S.find(s=>String(s.id)===String(id))).filter(Boolean)}
+ else{
+  if(!me){box.innerHTML=`<div class="empty">${t('needIn')}</div>`;return}
+  const set=k==='liked'?acts.l:acts.s;rows=S.filter(s=>set.has(String(s.id)));
+ }
+ const g=document.createElement('div');g.className='grid';box.appendChild(g);fill(g,rows);
+}
+document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+
+async function refresh(){authUI();await loadCreator();await loadScripts();if(own()){loadAn();loadReports()}}
+db.auth.onAuthStateChange((_e,s)=>{const n=s?.user||null;if((n?.id||null)!==(me?.id||null)){me=n;setTimeout(refresh,0)}});
+(async()=>{
+ const {data}=await db.auth.getSession();me=data?.session?.user||null;
+ applyLang();await refresh();
+})();
+</script>
+</body>
+</html>
