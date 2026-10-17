@@ -49,7 +49,6 @@ label{display:block;margin:2px 0 -4px;color:var(--m);font-size:12px}
 </head>
 <body>
 <div class="wrap">
- <div class="top"><a class="back" href="index.html">← ត្រឡប់ក្រោយ · Back</a></div>
 
  <section class="hero">
   <div class="av" id="av">F</div>
@@ -151,7 +150,7 @@ $('go').onclick=async()=>{
  $('go').disabled=true;
  const {data,error}=await db.auth.signInWithPassword({email,password});
  $('go').disabled=false;
- if(error)return toast('Login failed.');
+ if(error)return toast(error.message||'Login failed.');
  if(data.user.id!==OWNER){await db.auth.signOut();return toast('This is not the owner account.')}
  $('op').value='';
 };
